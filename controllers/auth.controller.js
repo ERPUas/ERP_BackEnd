@@ -40,26 +40,26 @@ module.exports = {
     regis: async (req, res) => {
         try {
             const { username, password } = req.body;
-
+    
             if (!password || !username) {
                 throw new Error('Username and password are required');
             }
-
+    
             const existingUser = await User.findOne({ username });
             if (existingUser) {
                 throw new Error('Username already in use');
             }
-
+    
             const hashedPassword = await bcrypt.hash(password, 10);
-
+    
             const newUser = await User.create({
                 username,
                 password: hashedPassword
             });
-
+    
             res.status(201).json({
                 message: 'Registration successful',
-                user: { // Include user data
+                user: {
                     id: newUser._id,
                     username: newUser.username
                 }
@@ -67,5 +67,5 @@ module.exports = {
         } catch (error) {
             res.status(400).json({ error: error.message });
         }
-    }
+    }    
 };

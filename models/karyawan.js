@@ -5,6 +5,10 @@ const Karyawanchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "Karyawan",
     },
+    UserID: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+    },
     name: String,
     jabatan: String,
     departemen: String,

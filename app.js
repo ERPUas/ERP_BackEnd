@@ -12,7 +12,9 @@ async function startServer() {
     console.log('berhasil terhubung ke database');
 
     app.use(cors());
-    app.use(express.json());
+    // Mengatur batas payload menjadi 50MB atau sesuai kebutuhan
+    app.use(express.json({ limit: '50mb' }));
+    app.use(express.urlencoded({ limit: '50mb', extended: true }));
 
     app.use(allRoutes);
     app.get('/', (req, res) => {

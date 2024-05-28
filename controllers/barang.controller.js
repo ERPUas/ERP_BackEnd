@@ -86,16 +86,16 @@ module.exports = {
         }
     },
 
-    deleteBarang: async (req, res) => {
-        try {
-            const barang = await Barang.findById(req.params.id);
-            if (barang == null) {
-                return res.status(404).json({ message: 'Barang not found' });
-            }
-            await barang.remove();
-            res.json({ message: 'Barang deleted' });
-        } catch (err) {
-            res.status(500).json({ message: err.message });
+ deleteBarang: async (req, res) => {
+    try {
+        const deletedItem = await Barang.findByIdAndDelete(req.params.id);
+        if (!deletedItem) {
+            return res.status(404).json({ message: 'Barang not found' });
         }
+        res.json({ message: 'Barang deleted successfully', deletedItem });
+    } catch (error) {
+        console.error('Error deleting item:', error);
+        res.status(500).json({ message: 'Internal server error' });
     }
+}
 };

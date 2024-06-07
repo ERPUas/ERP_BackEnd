@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
+require ('dotenv').config()
 
-const DB_URL = process.env.DB_URL || "mongodb+srv://FaishalNando:123@cluster0.nb8ckwz.mongodb.net/Express_ERP"
+const DB_URL = process.env.DBURL
 
 const db = mongoose.connect(DB_URL)
 

@@ -1,26 +1,38 @@
 const mongoose = require('mongoose');
 
 const barangSchema = new mongoose.Schema({
-    barangID: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Barang",
+    Merek: {
+        type: String,
+        required: true
+    },
+    Model: {
+        type: String,
+        required: true
+    },
+    Tahun: {
+        type: Number,
+        required: true
+    },
+    Warna: {
+        type: String,
+        required: true
+    },
+    Biaya: {
+        type: Number,
+        required: true
+    },
+    Status: {
+        type: String,
+        required: true
+    },
+    Stok: {
+        type: Number,
+        required: true
     },
     Gambar: {
-        data: Buffer,
-        contentType: String,
-    },
-    Merek: String,
-    Model: String,
-    Tahun: Number,
-    Warna: String,
-    Biaya: Number,
-    Status: {  
         type: String,
-        enum: ['Tersedia', 'Tidak Tersedia'],
-        default: 'Tersedia'
-    },
-    Stok: Number
+        required: true
+    }
 });
 
-const Barang = mongoose.model("Barang", barangSchema);
-module.exports = Barang;
+module.exports = mongoose.model('Barang', barangSchema);

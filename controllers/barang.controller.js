@@ -11,20 +11,19 @@ module.exports = {
     },
 
     createBarang: async (req, res) => {
-        const barang = new Barang({
-            Merek: req.body.Merek,
-            Model: req.body.Model,
-            Tahun: req.body.Tahun,
-            Warna: req.body.Warna,
-            Biaya: req.body.Biaya,
-            Status: req.body.Status,
-            Stok: req.body.Stok
-        });
+        const { Merek, Model, Tahun, Warna, Biaya, Status, Stok } = req.body;
+        const Gambar = req.file ? req.file.path : null;
 
-        if (req.file) {
-            barang.Gambar.data = req.file.buffer;
-            barang.Gambar.contentType = req.file.mimetype;
-        }
+        const barang = new Barang({
+            Merek,
+            Model,
+            Tahun,
+            Warna,
+            Biaya,
+            Status,
+            Stok,
+            Gambar
+        });
 
         try {
             const newBarang = await barang.save();
@@ -37,46 +36,32 @@ module.exports = {
     getBarangById: async (req, res) => {
         try {
             const barang = await Barang.findById(req.params.id);
-            if (barang == null) {
+            if (!barang) {
                 return res.status(404).json({ message: 'Barang not found' });
             }
             res.json(barang);
         } catch (err) {
-            return res.status(500).json({ message: err.message });
+            res.status(500).json({ message: err.message });
         }
     },
 
     updateBarang: async (req, res) => {
         try {
             const barang = await Barang.findById(req.params.id);
-            if (barang == null) {
+            if (!barang) {
                 return res.status(404).json({ message: 'Barang not found' });
             }
 
-            if (req.body.Merek != null) {
-                barang.Merek = req.body.Merek;
-            }
-            if (req.body.Model != null) {
-                barang.Model = req.body.Model;
-            }
-            if (req.body.Tahun != null) {
-                barang.Tahun = req.body.Tahun;
-            }
-            if (req.body.Warna != null) {
-                barang.Warna = req.body.Warna;
-            }
-            if (req.body.Biaya != null) {
-                barang.Biaya = req.body.Biaya;
-            }
-            if (req.body.Status != null) {
-                barang.Status = req.body.Status;
-            }
-            if (req.body.Stok != null) {
-                barang.Stok = req.body.Stok;
-            }
+            barang.Merek = req.body.Merek ?? barang.Merek;
+            barang.Model = req.body.Model ?? barang.Model;
+            barang.Tahun = req.body.Tahun ?? barang.Tahun;
+            barang.Warna = req.body.Warna ?? barang.Warna;
+            barang.Biaya = req.body.Biaya ?? barang.Biaya;
+            barang.Status = req.body.Status ?? barang.Status;
+            barang.Stok = req.body.Stok ?? barang.Stok;
+
             if (req.file) {
-                barang.Gambar.data = req.file.buffer;
-                barang.Gambar.contentType = req.file.mimetype;
+                barang.Gambar = req.file.path;
             }
 
             const updatedBarang = await barang.save();
@@ -89,10 +74,10 @@ module.exports = {
     deleteBarang: async (req, res) => {
         try {
             const barang = await Barang.findById(req.params.id);
-            if (barang == null) {
+            if (!barang) {
                 return res.status(404).json({ message: 'Barang not found' });
             }
-            await barang.remove();
+            await Barang.deleteOne({ _id: req.params.id });
             res.json({ message: 'Barang deleted' });
         } catch (err) {
             res.status(500).json({ message: err.message });

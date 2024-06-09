@@ -10,10 +10,11 @@ const pembayaranRoute = require('./pembayaran.route');
 const peminjamanRoute = require('./pembayaran.route');
 const userRoute = require('./user.route')
 const pesananRoute = require('./pesanan.route')
+const ulasanRoute = require('./ulasan.route')
 
 route.get("/", (req, res) => {
     res.json("Express mongoose halo");
-});
+})
 
 route.use("/auth", authRoute);
 route.use("/barang", barangRoute);
@@ -24,8 +25,7 @@ route.use("/pembayaran", pembayaranRoute)
 route.use("/peminjaman", peminjamanRoute)
 route.use("/pesanan", pesananRoute)
 route.use("/user", userRoute)
-
-
+route.use("/ulasan", ulasanRoute)
 
 
 module.exports = route;

@@ -3,7 +3,7 @@ const { getAllPelanggan, getPelangganById, addPelanggan, updatePelanggan, delete
 const route = express.Router()
 const authenticate = require('../midleware/authMidleware')
 
-route.get('/',authenticate, getAllPelanggan)
+route.get('/', getAllPelanggan)
 route.get('/:id', getPelangganById)
 route.post('/', addPelanggan)
 route.put('/:id', updatePelanggan)

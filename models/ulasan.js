@@ -15,6 +15,10 @@ const ulasanSchema = new mongoose.Schema({
     },
     rating: Number,
     ulasan: String,
+    Gambar: {
+        type: String,
+        required:true
+    }
 })
 
 const Ulasan = mongoose.model('Ulasan', ulasanSchema)

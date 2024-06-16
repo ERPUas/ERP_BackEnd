@@ -23,9 +23,18 @@ module.exports = {
     },
 
     addPelanggan: async (req, res) => {
+        const {UserID, name, Alamat, NoTelp} = req.body
+        const Gambar = req.file ? req.file.path : null;
+
+        const pelanggan = new Pelanggan({
+            UserID,
+            name,
+            Alamat,
+            NoTelp,
+            Gambar
+        })
         try {
-            const newPelanggan = new Pelanggan(req.body);
-            await newPelanggan.save();
+            const newPelanggan = await pelanggan.save();
             res.status(201).json(newPelanggan);
         } catch (error) {
             res.status(400).json({ message: error.message });
@@ -34,10 +43,20 @@ module.exports = {
 
     updatePelanggan: async (req, res) => {
         try {
-            const pelanggan = await Pelanggan.findByIdAndUpdate(req.params.id, req.body, { new: true });
+            const pelanggan = await Pelanggan.findById(req.params.id);
             if (!pelanggan) {
                 return res.status(404).json({ message: 'Pelanggan not found' });
             }
+            pelanggan.UserID = req.body.UserID;
+            pelanggan.name = req.body.name;
+            pelanggan.Alamat = req.body.Alamat;
+            pelanggan.NoTelp = req.body.NoTelp;
+
+            if (req.file) {
+                pelanggan.Gambar = req.file.path;
+            }
+
+            const updatedPelanggan = await pelanggan.save();
             res.status(200).json(pelanggan);
         } catch (error) {
             res.status(400).json({ message: error.message });

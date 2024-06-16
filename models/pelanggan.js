@@ -12,7 +12,6 @@ const pelangganSchema = new mongoose.Schema({
     name: String,
     Alamat: String,
     NoTelp: Number,
-    Email: String,
 })
 
 const Pelanggan = mongoose.model("Pelanggan", pelangganSchema)

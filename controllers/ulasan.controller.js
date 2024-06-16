@@ -3,7 +3,7 @@ const Ulasan = require('../models/ulasan')
 module.exports = {
     getAllUlasan: async(req,res) => {
         try {
-            const ulasan = await Ulasan.find().populate('UserID').populate('PelangganID', 'name')
+            const ulasan = await Ulasan.find().populate('UserID', 'username').populate('PelangganID', 'name')
             res.status(200).json(ulasan)
         } catch (error) {
             res.status(500).json({message: error.message})

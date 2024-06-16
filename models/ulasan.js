@@ -1,25 +1,25 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-const ulasanSchema = new mongoose.Schema({
-    ulasanID: {
-        type:mongoose.Types.ObjectId,
-        ref: 'Ulasan'
-    },
+const UlasanSchema = new Schema({
     UserID: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
     },
     PelangganID: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Pelanggan",
+        type: Schema.Types.ObjectId,
+        ref: 'Pelanggan',
+        required: true
     },
-    rating: Number,
-    ulasan: String,
-    Gambar: {
+    rating: {
+        type: Number,
+        required: true
+    },
+    ulasan: {
         type: String,
-        required:true
+        required: true
     }
-})
+});
 
-const Ulasan = mongoose.model('Ulasan', ulasanSchema)
-module.exports = Ulasan
+module.exports = mongoose.model('Ulasan', UlasanSchema);

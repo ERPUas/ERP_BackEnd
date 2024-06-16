@@ -12,6 +12,10 @@ const pelangganSchema = new mongoose.Schema({
     name: String,
     Alamat: String,
     NoTelp: Number,
+    Gambar: {
+        type: String,
+        required:true
+    }
 })
 
 const Pelanggan = mongoose.model("Pelanggan", pelangganSchema)
